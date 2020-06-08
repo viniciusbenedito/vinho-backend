@@ -5,7 +5,7 @@ const server = express();
 server.use(express.json());
 
 const vinho = [
-    {nome: 'Mediterraneo', tipo: 'Tinto', classificacao: 'Seco', safra: 2017},
+    {nome: 'Mediterraneo', tipo: 'Tinto', classificacao: 'Tinto', safra: 2017},
     {nome: 'Montado Branco', tipo: 'Branco', classificacao: 'Seco', safra: 2018},
     {nome: 'San Ceteo Turandot', tipo: 'Tinto', classificacao: 'Seco', safra: 2018}
 ]
