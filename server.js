@@ -7,7 +7,7 @@ server.use(express.json());
 const vinho = [
     {nome: 'Mediterraneo', tipo: 'Tinto', classificacao: 'Seco', safra: 2017},
     {nome: 'Montado Branco', tipo: 'Branco', classificacao: 'Seco', safra: 2018},
-    {nome: 'San Ceteo Turandot', tipo: 'Tinto', classificacao: 'Meio Seco', safra: 2018}
+    {nome: 'San Ceteo Turandot', tipo: 'Tinto', classificacao: 'Seco', safra: 2018}
 ]
 
 server.get('/vinho', function(request, response) {
