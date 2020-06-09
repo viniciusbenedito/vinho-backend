@@ -1,17 +1,23 @@
 const express = require('express');
+const Pool = require('pg').Pool;
+
+
+const pool = new Pool({
+    user:'eiaxgsukppdhtn',
+    password:'f2a4ad85d074123efabac172742aa12270422eb164b5ea90e5aad1dc18808d9a',
+    host:'ec2-3-222-30-53.compute-1.amazonaws.com',
+    database:'d73usfjf2rnoh5',
+    port: 5432,
+    ssl: { rejectUnauthorized: false }
+});
 
 const server = express();
 
 server.use(express.json());
 
-const vinho = [
-    {nome: 'Mediterraneo', tipo: 'Tinto', classificacao: 'Seco', safra: 2017},
-    {nome: 'Montado Branco', tipo: 'Branco', classificacao: 'Seco', safra: 2018},
-    {nome: 'San Ceteo Turandot', tipo: 'Tinto', classificacao: 'Meio Seco', safra: 2018}
-]
-
-server.get('/vinho', function(request, response) {
-    response.json(vinho);
+server.get('/vinho', async function(request, response) {
+    const result = await pool.query('SELECT * FROM vinho');
+    return response.json(result.rows);
 })
 
 server.post('/vinho', function(request, response) {
