@@ -15,24 +15,24 @@ const server = express();
 
 server.use(express.json());
 
+//GET
 server.get('/vinho', async function(request, response) {
     const result = await pool.query('SELECT * FROM vinho');
     return response.json(result.rows);
 })
 
-server.post('/vinho', function(request, response) {
-
-    //const nome = request.body.nome;
-    //const tipo = request.body.tipo;
-    //const classificacao = request.body.classificacao;
-    //const safra = request.body.safra;
-
-    const {nome, tipo, classificacao, safra} = request.body;
-
-    vinho.push({nome, tipo, classificacao, safra});
-    response.status(204).send();
+//POST
+server.post('/vinho', async function(request, response) {
+    const nome = request.body.nome;
+    const tipo = request.body.tipo;
+    const classificacao = request.body.classificacao;
+    const safra = request.body.safra;
+    const sql= `INSERT INTO vinho (nome, tipo, classificacao, safra) VALUES ($1, $2, $3, $4)`;
+    await pool.query(sql, [nome, tipo, classificacao, safra]);
+    return response.status(204).send();
 })
 
+//PUT
 server.put('/vinho/:id', function(request, response) {
     const id = request.params.id;
     const {nome, tipo, classificacao, safra} = request.body;
@@ -50,6 +50,7 @@ server.put('/vinho/:id', function(request, response) {
     return response.status(204).send();
 })
 
+//DELETE
 server.delete('/vinho/:id', function(request, response) {
     const id = request.params.id;
 
