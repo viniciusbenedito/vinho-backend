@@ -32,34 +32,20 @@ server.post('/vinho', async function(request, response) {
     return response.status(204).send();
 })
 
-//PUT
-server.put('/vinho/:id', function(request, response) {
+//DELETE
+server.delete('/vinho/:id', async function(request, response) {
     const id = request.params.id;
-    const {nome, tipo, classificacao, safra} = request.body;
-
-    for(let i = 0; i < vinho.length; i++) {
-        if(vinho[i].nome == id) {
-            vinho[i].nome = nome;
-            vinho[i].tipo = tipo;
-            vinho[i].classificacao = classificacao;
-            vinho[i].safra = safra;
-            break;
-        }
-    }
-
-    return response.status(204).send();
+    const sql = `DELETE FROM vinho WHERE id = $1`;
+    await pool.query(sql, [id]);
+    return response.status(204).send();    
 })
 
-//DELETE
-server.delete('/vinho/:id', function(request, response) {
+//PUT
+server.put('/vinho/:id', async function(request, response) {
     const id = request.params.id;
-
-        for(let i = 0; i < vinho.length; i++) {
-        if(vinho[i].nome == id) {
-            vinho.splice(i, 1);
-            break;
-        }
-    }
+    const { nome, tipo, classificacao, safra } = request.body;
+    const sql = `UPDATE vinho SET nome = $1, tipo = $2, classificacao = $3, safra = $4  WHERE id = $5`;
+    await pool.query(sql, [nome, tipo, classificacao, safra, id]);
     return response.status(204).send();
 })
 
