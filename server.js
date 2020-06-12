@@ -30,13 +30,6 @@ server.get('/vinho/:id', async function(request, response) {
     return response.json(result.rows);
 })
 
-server.get('/vinho/search', async function(request, response) {
-    const nome = request.query.nome;
-    const sql = `SELECT * FROM vinho WHERE nome ILIKE $1`;
-    const result = await pool.query(sql, ["%" + nome + "%"]);
-    return response.json(result.rows);
-})
-
 //POST
 server.post('/vinho', async function(request, response) {
     const nome = request.body.nome;
